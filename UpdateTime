@@ -1,0 +1,31 @@
+ static void Main(string[] args)
+        {
+            Console.WriteLine(GetNetworkTime("time.nist.gov", -6).ToShortTimeString());
+            Console.ReadLine();
+        }
+
+
+        public static DateTime GetNetworkTime(String TimeServer, int UTC_Offset) 
+        { 
+            EndPoint ep = new IPEndPoint(Dns.GetHostEntry(TimeServer).AddressList[0], 13);
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp); 
+            byte[] msg = new Byte[50]; 
+            s.Connect(ep); 
+            s.Send(new byte[1],0,0); 
+            s.Receive(msg); 
+            String S = new String(System.Text.Encoding.UTF8.GetChars(msg)); 
+            DateTime UTC_Time = new DateTime(Convert.ToInt32("20" + S.Substring(7, 2)), Convert.ToInt32(S.Substring(10, 2)), Convert.ToInt32(S.Substring(13, 2)), Convert.ToInt32(S.Substring(16, 2)), Convert.ToInt32(S.Substring(19, 2)), Convert.ToInt32(S.Substring(22, 2))); 
+            int ST_DST = Convert.ToInt32(S.Substring(25, 2));
+            TimeSpan offsetAmount; 
+            if (ST_DST == 0 || ST_DST > 50) //Winter Standard Time 
+            { 
+                offsetAmount = new TimeSpan(0, UTC_Offset, 0, 0, 0);
+            } 
+            else //Summer Daylight Saving Time 
+            { 
+                offsetAmount = new TimeSpan(0, UTC_Offset+1, 0, 0, 0); 
+            }
+            DateTime LocalDateTime = (UTC_Time + offsetAmount); 
+            
+            return LocalDateTime; 
+        } 
