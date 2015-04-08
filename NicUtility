@@ -1,0 +1,36 @@
+ //public static class NICUtility
+    //{
+    //private static OutputPort resetEthernetPort = new OutputPort((Cpu.Pin)50, true); //0x32 hexpublic 
+    //    static bool DHCP = false;// if DHCP set to true, these two values dont matter.   Subnet mask is set to: 255.255.255.0
+    //    public static string myIPaddress = "192.168.137.10";
+    //    public static string myGatewayAddress = "192.168.137.1";
+    //    private static void resetEthernet()       
+    //    {            
+    //        resetEthernetPort.Write(false);            
+    //        Thread.Sleep(50);            
+    //        resetEthernetPort.Write(true);        
+    //    }
+        
+    //    private static void rebootME()
+    //    {            
+    //        resetEthernet();
+    //        PowerState.RebootDevice(false);        
+    //    }
+        
+    //    private static void checkIP()        
+    //    {
+    //        NetworkInterface NI;
+    //        if (DHCP)            
+    //        {                
+    //            Debug.Print("Setting to DHCP.");                
+    //            NetworkInterface.GetAllNetworkInterfaces()[0].EnableDhcp();            
+    //        }            
+    //        else            
+    //        {                
+    //            Debug.Print("Setting to static IP address.");                
+    //            NetworkInterface.GetAllNetworkInterfaces()[0].EnableStaticIP(myIPaddress, "255.255.255.0", myGatewayAddress);            }            int countTry = 1;            while (true)            {                NI = NetworkInterface.GetAllNetworkInterfaces()[0];                if (NI.IPAddress != "0.0.0.0")                {                    Debug.Print("IP Address Obtained: " + NI.IPAddress);                    break;                }                else                {                    Debug.Print("Try #" + countTry + ". No IP Address ...");                    Thread.Sleep(2000);                }                countTry++;                if (countTry == 6)                {                    Debug.Print("Failure after 5 tries.  Rebooting device...");                    
+    //                rebootME();                
+    //            }            
+    //            }        
+    //    }
+    //}
